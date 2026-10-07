@@ -45,7 +45,7 @@ En PowerShell, detén el servidor que tengas abierto y ejecuta:
 .\start-with-email.ps1
 ```
 
-El script pide la contraseña de aplicación sin mostrarla y la mantiene solo en el proceso del servidor. Si el remitente es otra cuenta, usa `.\start-with-email.ps1 -Sender otra-cuenta@gmail.com`. En Gmail, el envío usa `smtp.gmail.com` con SSL en el puerto 465. Al guardar las respuestas, el mensaje queda en SQLite y el servidor intenta enviarlo por correo. El estado del correo se guarda en la columna `email_status` de la base de datos; la web y la respuesta de la API no se lo muestran a Sebastián. Sin contraseña de aplicación, el mensaje queda guardado localmente, pero no llega al correo.
+El script pide la contraseña de aplicación sin mostrarla y la mantiene solo en el proceso del servidor. Si el remitente es otra cuenta, usa `.\start-with-email.ps1 -Sender otra-cuenta@gmail.com`. En Gmail, el envío usa `smtp.gmail.com` con SSL en el puerto 465. Al guardar las respuestas, las tres respuestas y el mensaje opcional quedan en SQLite y el servidor intenta enviarlos por correo. El estado del correo se guarda en la columna `email_status` de la base de datos; la web y la respuesta de la API no se lo muestran a Sebastián. Sin contraseña de aplicación, quedan guardados localmente, pero no llegan al correo.
 
 ### Publicar en Render durante 24 horas
 
@@ -61,7 +61,7 @@ El archivo `render.yaml` prepara un **Web Service Free** y una base **Postgres F
    | `RESEND_API_KEY` | La clave privada `re_...` de Resend |
    | `GIFT_START_AT` | Fecha y hora de inicio con zona horaria, por ejemplo `2026-10-07T18:00:00-06:00` |
 
-4. Espera a que el servicio indique **Live**. El enlace se abre automáticamente al llegar `GIFT_START_AT` y deja de mostrar la web **24 horas después**. `/api/health` sigue disponible para la verificación de Render. Antes de compartir el enlace, prueba el formulario y confirma que el mensaje llegó al buzón de Gmail. Si el envío falla, la web no confirmará el guardado y el mensaje queda registrado en Postgres para revisarlo.
+4. Espera a que el servicio indique **Live**. El enlace se abre automáticamente al llegar `GIFT_START_AT` y deja de mostrar la web **24 horas después**. `/api/health` sigue disponible para la verificación de Render. Antes de compartir el enlace, prueba el formulario y confirma que llegaron las tres respuestas y el mensaje opcional al buzón de Gmail. Si el envío falla, la web no confirmará el guardado y las respuestas quedan registradas en Postgres para revisarlas.
 5. Al terminar el regalo, borra el servicio y la base de datos desde Render si ya no necesitas conservarlos. El cierre de 24 horas oculta la web, pero no elimina los recursos por sí mismo.
 
 El servicio Free puede tardar alrededor de un minuto en responder a la primera visita tras suspenderse. [Render documenta la suspensión a los 15 minutos de inactividad](https://render.com/docs/free). La base Postgres Free conserva los mensajes durante el día del regalo; [Render indica que las bases gratuitas expiran a los 30 días](https://render.com/docs/free).

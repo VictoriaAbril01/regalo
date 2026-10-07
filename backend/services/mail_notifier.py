@@ -44,16 +44,17 @@ class MailNotifier:
         )
 
     def send(self, wishes: WishesCreate) -> str:
-        if not wishes.message:
-            return "not_requested"
         email = EmailMessage()
-        email["Subject"] = "Un mensaje de Sebastián 💛"
+        email["Subject"] = "Las respuestas de Sebastián 💛"
         email["From"] = self.username
         email["To"] = self.recipient
+        message_section = (
+            f"Sebastián te dejó este mensaje:\n\n{wishes.message}\n\n"
+            if wishes.message else ""
+        )
         email.set_content(
-            "Sebastián te dejó este mensaje:\n\n"
-            f"{wishes.message}\n\n"
-            "También respondió:\n\n"
+            message_section
+            + "Estas son las respuestas de Sebastián:\n\n"
             f"Lugar para ir juntos: {wishes.place}\n\n"
             f"Regalo que le gustaría: {wishes.gift}\n\n"
             f"Tema para platicar: {wishes.topic}\n"

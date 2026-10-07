@@ -14,8 +14,6 @@ class FakeMailer:
         self.sent = []
 
     def send(self, wishes):
-        if not wishes.message:
-            return "not_requested"
         self.sent.append(wishes)
         return "sent"
 
@@ -64,7 +62,7 @@ def test_existing_database_is_upgraded(tmp_path):
     assert response.status_code == 201
     assert "email_status" not in response.json()
     with sqlite3.connect(path) as db:
-        assert db.execute("SELECT message, email_status FROM wishes").fetchone() == ("", "not_requested")
+        assert db.execute("SELECT message, email_status FROM wishes").fetchone() == ("", "sent")
 
 
 def test_mail_notifier_uses_smtp_without_network(monkeypatch):
@@ -114,6 +112,23 @@ def test_mail_notifier_uses_resend_over_https(monkeypatch):
     assert timeout == 12
 
 
+def test_resend_sends_answers_without_optional_message(monkeypatch):
+    captured = []
+
+    def fake_post(url, *, headers, json, timeout):
+        captured.append(json)
+        return httpx.Response(200, request=httpx.Request("POST", url), json={"id": "email-2"})
+
+    monkeypatch.setattr("backend.services.mail_notifier.httpx.post", fake_post)
+    wishes = WishesCreate(place="Chapultepec", gift="Un libro", topic="Música")
+    notifier = MailNotifier("akane8264@gmail.com", "", "", resend_api_key="secret-key")
+    assert notifier.send(wishes) == "sent"
+    assert "Chapultepec" in captured[0]["text"]
+    assert "Un libro" in captured[0]["text"]
+    assert "Música" in captured[0]["text"]
+    assert "te dejó este mensaje" not in captured[0]["text"]
+
+
 def test_required_delivery_does_not_confirm_failed_email(tmp_path, monkeypatch):
     class FailedMailer:
         def send(self, wishes):
@@ -127,6 +142,20 @@ def test_required_delivery_does_not_confirm_failed_email(tmp_path, monkeypatch):
     assert "correo" not in response.json()["detail"]
     with sqlite3.connect(path) as db:
         assert db.execute("SELECT message, email_status FROM wishes").fetchone() == ("Hola", "failed")
+
+
+def test_required_delivery_of_answers_without_optional_message(tmp_path, monkeypatch):
+    class FailedMailer:
+        def send(self, wishes):
+            return "failed"
+
+    monkeypatch.setenv("REQUIRE_EMAIL_DELIVERY", "true")
+    path = tmp_path / "wishes.sqlite3"
+    with TestClient(create_app(path, FailedMailer())) as client:
+        response = client.post("/api/wishes", json={"place": "Un lugar", "gift": "Un libro", "topic": "Música"})
+    assert response.status_code == 503
+    with sqlite3.connect(path) as db:
+        assert db.execute("SELECT message, email_status FROM wishes").fetchone() == ("", "failed")
 
 
 def test_gift_window_limits_public_access_to_24_hours(tmp_path, monkeypatch):

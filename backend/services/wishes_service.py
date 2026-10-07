@@ -14,6 +14,6 @@ class WishesService:
         saved = self.storage.save(wishes)
         email_status = self.mailer.send(wishes)
         self.storage.set_email_status(saved.id, email_status)
-        if self.require_delivery and wishes.message and email_status != "sent":
+        if self.require_delivery and email_status != "sent":
             raise RuntimeError("No se pudo completar el envío privado")
         return saved
