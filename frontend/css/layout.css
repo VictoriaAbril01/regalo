@@ -1,0 +1,27 @@
+.site-shell{min-height:100svh;display:flex;flex-direction:column;overflow:hidden}.site-header,.site-footer{width:min(100% - 40px,1240px);margin:auto;display:flex;align-items:center;justify-content:space-between}.site-header{min-height:85px;border-bottom:1px solid var(--line)}.brand{font-family:var(--serif);font-size:1.37rem;font-style:italic;color:var(--blue-deep);white-space:nowrap}.brand-heart{font-family:var(--sans);font-size:.75em;color:#b58a3a;font-style:normal;padding:0 .16rem}.header-note,.site-footer{font-size:.6rem;font-weight:700;letter-spacing:.22em;color:var(--muted)}.app{width:min(100% - 36px,var(--content));margin:0 auto;flex:1}.site-footer{gap:1rem;min-height:74px;border-top:1px solid var(--line)}.stage{min-height:calc(100svh - 160px);display:flex;flex-direction:column;align-items:center;padding:28px 0 70px;animation:stage-in .7s var(--ease) both}.stage-head{text-align:center;margin:4px auto 28px;max-width:590px}.stage-head .eyebrow{display:block;margin-bottom:15px}.stage-head p{max-width:470px;margin:14px auto 0;color:var(--muted)}.progress{display:flex;justify-content:center;gap:10px;margin:4px auto 35px}.progress-dot{width:8px;height:8px;border-radius:50%;border:1px solid var(--gold-soft);background:transparent;transition:background .4s,transform .4s}.progress-dot.active{background:var(--blue);transform:scale(1.25)}.progress-dot.done{background:var(--gold-soft)}.note-card{background:var(--paper);border:1px solid var(--line);border-radius:var(--radius);box-shadow:var(--shadow)}.ornament{font-family:var(--serif);color:var(--gold);font-size:1.5rem}.section-rule{display:flex;align-items:center;gap:1rem;color:var(--gold-soft);margin:40px 0}.section-rule::before,.section-rule::after{content:"";height:1px;background:var(--line);flex:1}@media(max-width:560px){.site-header{min-height:70px}.header-note{font-size:.52rem;max-width:130px;text-align:right;line-height:1.4}.site-footer{font-size:.48rem;min-height:58px}.stage{min-height:calc(100svh - 128px);padding-top:25px}.progress{margin-bottom:28px}}
+.site-footer{padding-bottom:env(safe-area-inset-bottom,0px)}
+.progress{position:relative;width:min(220px,55vw);justify-content:space-between;align-items:center;gap:0}
+.progress::before,.progress::after{content:"";position:absolute;left:4px;right:4px;top:50%;height:1px;transform-origin:left;pointer-events:none}
+.progress::before{background:var(--line)}
+.progress::after{background:linear-gradient(90deg,var(--gold),var(--blue));transform:scaleX(var(--progress-scale,0));animation:progress-thread .65s var(--ease) both}
+.progress-dot{position:relative;z-index:1;width:11px;height:11px;background:var(--cream);border-color:var(--gold-soft)}
+.progress-dot.active{background:var(--blue);animation:progress-dot-in .5s var(--ease) both}
+.progress-dot.done{background:var(--gold-soft)}
+@keyframes progress-thread{from{transform:scaleX(0)}to{transform:scaleX(var(--progress-scale,0))}}
+@keyframes progress-dot-in{from{transform:scale(.75)}to{transform:scale(1.25)}}
+
+/* Los cinco pasos se representan con nuestro corazón amarillo. */
+.progress::before,.progress::after{left:11px;right:11px}
+.progress-dot,.progress-dot.done,.progress-dot.active{
+  display:grid;
+  place-items:center;
+  width:22px;
+  height:22px;
+  border:0;
+  background:transparent;
+  line-height:1;
+}
+.progress-dot{font-size:16px;opacity:.38}
+.progress-dot.done{opacity:.78}
+.progress-dot.active{font-size:18px;opacity:1;filter:drop-shadow(0 2px 3px rgba(181,138,58,.28))}
+@media(max-width:380px){.site-header .brand{font-size:1.12rem}.site-header .header-note{max-width:100px}}

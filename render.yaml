@@ -1,0 +1,27 @@
+services:
+  - type: web
+    name: para-mi-sebastian
+    runtime: python
+    plan: free
+    buildCommand: pip install -r requirements.txt
+    startCommand: python -m uvicorn backend.main:app --host 0.0.0.0 --port $PORT
+    healthCheckPath: /api/health
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.13.5
+      - key: DATABASE_URL
+        fromDatabase:
+          name: para-mi-sebastian-db
+          property: connectionString
+      - key: WISHES_EMAIL_TO
+        sync: false
+      - key: RESEND_API_KEY
+        sync: false
+      - key: GIFT_START_AT
+        sync: false
+      - key: REQUIRE_EMAIL_DELIVERY
+        value: "true"
+
+databases:
+  - name: para-mi-sebastian-db
+    plan: free

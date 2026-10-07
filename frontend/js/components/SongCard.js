@@ -1,0 +1,38 @@
+export function songCard(song, index, onSelect, signal) {
+  const card = document.createElement('button');
+  card.className = 'song-card';
+  card.type = 'button';
+  const tilts = [-2, 2, -1, 2, -2, 1];
+  card.style.setProperty('--tilt', `${tilts[index % tilts.length]}deg`);
+  card.setAttribute('aria-label', `Reproducir ${song.title} de ${song.artist}`);
+  card.setAttribute('aria-pressed', 'false');
+  card.addEventListener('click', onSelect, { signal });
+  const art = document.createElement('div');
+  art.className = 'song-art';
+  const numeral = document.createElement('span');
+  numeral.textContent = String(index + 1).padStart(2, '0');
+  const img = document.createElement('img');
+  img.src = song.photo;
+  img.alt = '';
+  img.loading = 'eager';
+  if (song.photoRotation) img.style.transform = `rotate(${song.photoRotation}deg)`;
+  img.onerror = () => img.remove();
+  art.append(numeral, img);
+  const info = document.createElement('div');
+  info.className = 'song-info';
+  const title = document.createElement('strong');
+  title.textContent = song.title;
+  const artist = document.createElement('small');
+  artist.textContent = song.artist;
+  const dedication = document.createElement('p');
+  dedication.className = 'song-dedication';
+  dedication.textContent = song.dedication;
+  const link = document.createElement('span');
+  link.className = 'song-link';
+  link.textContent = 'Reproducir aquí ▶';
+  info.append(title, artist);
+  if (song.dedication) info.append(dedication);
+  info.append(link);
+  card.append(art, info);
+  return card;
+}

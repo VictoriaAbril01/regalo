@@ -1,0 +1,21 @@
+.meter-stage{justify-content:center;text-align:center}.meter-scene{width:min(100%,600px);position:relative}.meter-prelude{font-family:var(--serif);font-size:clamp(2.1rem,7vw,3.5rem);min-height:100px;display:grid;place-items:center;animation:fade-up .8s both}.meter-main{display:none}.meter-main.visible{display:block;animation:fade-up .7s both}.meter-value{font-family:var(--serif);font-size:clamp(5rem,19vw,10rem);line-height:1;color:var(--blue-deep);letter-spacing:-.08em;margin:38px 0 20px;font-variant-numeric:tabular-nums}.meter-track{height:28px;border:2px solid var(--blue-deep);border-radius:999px;padding:4px;background:#f8fbfc;position:relative;margin:0 18px}.meter-fill{height:100%;width:0;background:linear-gradient(90deg,#b6cbd7,#285574);border-radius:999px;transition:width .8s var(--ease);box-shadow:0 0 24px #b58a3a77}.meter-scene.overload .meter-fill{box-shadow:0 0 30px #b58a3aaa}.meter-scene.unstable{animation:shake .28s linear infinite}.meter-caption{color:var(--muted);margin:23px 0 0}.meter-final{display:none;max-width:620px;margin:auto;animation:fade-up 1.5s both}.meter-final.visible{display:block}.meter-final .ornament{font-size:2.4rem}.meter-final h2{margin:10px 0 20px}.meter-final p{font-size:1.1rem}.meter-final .final-message{padding:22px;margin:28px auto 0;background:#fffefa;border:1px solid var(--line);border-radius:20px}.meter-final .final-message .placeholder{font-size:1.15rem}.explosion-canvas{position:fixed;inset:0;width:100%;height:100%;pointer-events:none;z-index:35}
+.meter-final .final-message{padding:clamp(24px,6vw,44px);text-align:left;box-shadow:var(--shadow);border-left:3px solid var(--gold)}.final-message .rich-paragraph{font-size:1rem;line-height:1.8;margin:0 0 1.5em}.final-message .rich-paragraph:last-child{margin-bottom:0}.final-message .rich-paragraph:first-child{font-family:var(--serif);font-size:1.75rem;color:var(--blue-deep);margin-bottom:1.15em}.final-message .rich-paragraph:nth-child(3){font-family:var(--serif);font-size:clamp(1.9rem,7vw,2.5rem);font-style:italic;text-align:center;color:var(--blue-deep);margin:1.1em 0}.final-message .rich-paragraph:nth-child(3) strong,.final-message .rich-paragraph:nth-child(6) strong{background:linear-gradient(transparent 72%,rgba(181,138,58,.36) 72%)}.final-message .rich-paragraph:last-child{color:var(--blue-deep);font-weight:600}.meter-final.visible .final-message .rich-paragraph{animation:final-line-in .8s var(--ease) both;animation-delay:var(--reveal-delay)}.meter-final.visible .ornament{animation:gentle-glow 3.8s ease-in-out infinite}@keyframes final-line-in{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}@keyframes gentle-glow{50%{opacity:.65;transform:scale(1.07)}}
+.replay-row{margin:2.2rem 0 0}.replay-button{min-width:220px}
+.meter-scene.rising .meter-track{box-shadow:0 5px 18px #183e5d0d}
+.meter-scene.golden .meter-fill{box-shadow:0 0 18px #b58a3a66}
+.meter-scene.at-hundred .meter-value{color:var(--blue-deep)}
+.meter-scene.strained .meter-track{transform:rotate(-.3deg);transition:transform .5s}
+.meter-track::after{content:"";position:absolute;inset:3px 25% 3px auto;width:27px;border-left:1px solid #183e5d88;border-right:1px solid #183e5d55;transform:skewX(-18deg);opacity:0;transition:opacity .5s;pointer-events:none}
+.meter-scene.cracked .meter-track::after{opacity:.7}
+.meter-scene.error .meter-value{animation:meter-error .3s steps(2,end) 2}
+.meter-scene.infinite .meter-value{color:var(--gold)}
+.meter-scene.calm{animation:none}
+@keyframes meter-error{25%{opacity:.65;transform:translateX(-2px)}75%{opacity:1;transform:translateX(2px)}}
+.meter-final.visible h2{animation:final-calm-in .85s .1s both}
+.meter-final.visible>p{animation:final-calm-in .85s .3s both}
+.meter-final.visible .final-message{animation:final-card-in 1s .55s both}
+.meter-final.visible .final-message .rich-paragraph{animation:none}
+.final-message [data-emphasis="true"]::after{left:50%;width:min(100%,250px);translate:-50% 0}
+.final-message [data-emphasis="true"]::before{left:calc(50% + 112px)}
+@keyframes final-calm-in{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@keyframes final-card-in{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}

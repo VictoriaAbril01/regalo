@@ -1,0 +1,14 @@
+.wishes-card{width:min(100%,550px);padding:clamp(22px,6vw,45px)}.question-count{margin:0 0 18px;color:var(--blue);font-size:.72rem;font-weight:700;letter-spacing:.14em;text-transform:uppercase}.wishes-card label{display:block;font-family:var(--serif);font-size:clamp(1.5rem,5vw,2rem);line-height:1.3;margin-bottom:20px}.wishes-card textarea{display:block;width:100%;min-height:140px;padding:18px;border:1px solid #bfced8;border-radius:16px;background:#fffefa;color:var(--ink);resize:vertical;outline:0}.wishes-card textarea:focus{border-color:var(--blue);box-shadow:0 0 0 3px #28557444}.wishes-actions{display:flex;justify-content:space-between;align-items:center;gap:15px;margin-top:25px}.text-button{border:0;background:transparent;color:var(--blue);font-weight:600;min-height:44px}.wishes-status{min-height:28px;margin:20px 0 0;color:var(--blue);font-size:.88rem}.wishes-review{display:grid;gap:14px}.review-answer{padding:13px 16px;border:1px solid var(--line);border-radius:14px;background:#f8fbfc}.review-answer strong{display:block;font-size:.7rem;letter-spacing:.12em;text-transform:uppercase;color:var(--muted)}.review-answer span{overflow-wrap:anywhere}
+.question-progress{display:flex;gap:8px;margin:0 0 25px;color:var(--muted)}
+.question-step{display:flex;align-items:center;gap:8px;flex:1;font-size:.65rem;font-weight:700;letter-spacing:.08em}
+.question-step::after{content:"";height:1px;flex:1;background:var(--line);transform-origin:left;transition:background .4s,transform .4s}
+.question-step:last-child{flex:0}.question-step:last-child::after{display:none}
+.question-step.is-reached{color:var(--blue-deep)}
+.question-step.is-reached::after{background:var(--gold);animation:question-thread .55s var(--ease) both}
+.question-step.is-current{color:var(--gold)}
+@keyframes question-thread{from{transform:scaleX(0)}to{transform:scaleX(1)}}
+.wishes-card textarea{transition:border-color .25s,box-shadow .25s}
+.wishes-card textarea:focus{border-color:var(--gold-soft);box-shadow:0 0 0 3px #b58a3a21}
+.wishes-card textarea::placeholder{transition:opacity .22s}
+.wishes-card textarea:focus::placeholder{opacity:.55}
+.question-optional{display:block;margin-top:5px;font-family:var(--sans);font-size:.7rem;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--muted)}
